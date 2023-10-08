@@ -1,0 +1,4 @@
+[build]
+command = "npm run build"  # Замените на ваш скрипт сборки, если это необходимо
+publish = "soulcraftstudio_bot"  # Замените на директорию, из которой Netlify будет раздавать файлы
+functions = "functions"

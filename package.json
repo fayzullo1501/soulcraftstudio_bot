@@ -1,0 +1,16 @@
+{
+  "name": "soulcraftstudio_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-telegram-bot": "^0.1.9",
+    "node-telegram-bot-api": "^0.63.0"
+  }
+}
