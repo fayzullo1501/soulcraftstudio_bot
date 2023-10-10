@@ -1,7 +1,10 @@
 // 6647221838:AAFxmmP7u5K2MsjlfHWoRsRjNe_5gUmLgX0  446415034
 const TelegramBot = require('node-telegram-bot-api');
+const express = require('express');
+const bodyParser = require('body-parser');
+
 const token = '6647221838:AAFxmmP7u5K2MsjlfHWoRsRjNe_5gUmLgX0'; // Замените на ваш токен
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token);
 
 const serviceKeyboard = [
   [{ text: '📊 Презентация (Слайд)' }, { text: '📝 Объективка' }],
@@ -11,23 +14,20 @@ const serviceKeyboard = [
 const userData = {};
 let requestCounter = 1; // Переменная для хранения номера заявки
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
+// Создайте веб-сервер Express
+const app = express();
 
-  bot.sendMessage(chatId, 'Добро пожаловать в бота! Выберите услугу:', {
-    reply_markup: {
-      keyboard: serviceKeyboard,
-      resize_keyboard: true,
-      one_time_keyboard: true,
-    },
-  });
-});
+// Используйте bodyParser для обработки JSON входящих данных
+app.use(bodyParser.json());
 
-bot.on('text', (msg) => {
-  const chatId = msg.chat.id;
-  const userId = msg.from.id;
-  const messageText = msg.text;
+// Роут для обработки входящих обновлений от Telegram
+app.post('/webhook', (req, res) => {
+  const { message } = req.body;
+  const chatId = message.chat.id;
+  const userId = message.from.id;
+  const messageText = message.text;
 
+  // Обработка входящих сообщений
   if (!userData[userId]) {
     userData[userId] = {
       service: '',
@@ -66,8 +66,8 @@ bot.on('text', (msg) => {
   } else if (!userData[userId].contact) {
     userData[userId].contact = messageText;
 
-    if (msg.from.username) {
-      userData[userId].address = `@${msg.from.username}`;
+    if (message.from.username) {
+      userData[userId].address = `@${message.from.username}`;
       const adminChatId = '446415034'; // Замените на chat_id администратора
       const userMessage = `Новая заявка номер ${requestCounter}:\n\nУслуга: ${userData[userId].service}\nТема: ${userData[userId].topic}\nЯзык работы: ${userData[userId].language}\nКоличество страниц: ${userData[userId].pages}\nИмя: ${userData[userId].name}\nНомер телефона: ${userData[userId].contact}\nАдрес клиента (ник Telegram): ${userData[userId].address}`;
       bot.sendMessage(adminChatId, userMessage);
@@ -83,6 +83,18 @@ bot.on('text', (msg) => {
 
     delete userData[userId];
   }
+
+  res.sendStatus(200); // Отправляем статус 200 OK обратно Telegram
 });
+
+// Стартовая команда для настройки Webhook
+bot.setWebHook('https://soulcraftbot.netlify.app/webhook');
+
+// Установка слушателя на Express для веб-сервера
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Express server is listening on port ${port}`);
+});
+
 
 
