@@ -1,4 +1,7 @@
 [build]
-command = "npm run build"  # Замените на ваш скрипт сборки, если это необходимо
-publish = "soulcraftstudio_bot"  # Замените на директорию, из которой Netlify будет раздавать файлы
-functions = "functions"
+  command = "npm install && npm run build"
+  publish = "SOULCRAFTSTUDIO_BOT"
+  timeout = 900 # Увеличьте это значение (в секундах) по желанию.
+
+[context.production]
+  command = "npm install --only=production && npm run start"
