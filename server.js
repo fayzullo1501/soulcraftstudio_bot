@@ -1,11 +1,18 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+// Подключение к файлу с вашим ботом
+const bot = require('./bot.js'); // Импортируйте бота
+
+// Настройка порта
+const port = process.env.PORT || 3000;
+
+// Простой маршрут для проверки работоспособности сервера
 app.get('/', (req, res) => {
-  res.send('Your Telegram bot is running!');
+  res.send('Бот работает!');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Запуск сервера
+app.listen(port, () => {
+  console.log(`Сервер запущен на порту ${port}`);
 });

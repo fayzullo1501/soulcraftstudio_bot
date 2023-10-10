@@ -1,7 +1,0 @@
-[build]
-  command = "npm install && npm run build"
-  publish = "soulcraftstudio_bot"
-  timeout = 900 # Увеличьте это значение (в секундах) по желанию.
-
-[context.production]
-  command = "npm install --only=production && npm run start"
