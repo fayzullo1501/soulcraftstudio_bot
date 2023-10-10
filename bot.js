@@ -67,13 +67,13 @@ bot.on('text', (msg) => {
 
     if (msg.from.username) {
       userData[userId].address = `@${msg.from.username}`;
-      const adminChatId = '446415034'; // Замените на chat_id администратора
+      const adminChatId = '6498144305'; // Замените на chat_id администратора
       const userMessage = `Новая заявка номер ${requestCounter}:\n\nУслуга: ${userData[userId].service}\nТема: ${userData[userId].topic}\nЯзык работы: ${userData[userId].language}\nКоличество страниц: ${userData[userId].pages}\nИмя: ${userData[userId].name}\nНомер телефона: ${userData[userId].contact}\nАдрес клиента (ник Telegram): ${userData[userId].address}`;
       bot.sendMessage(adminChatId, userMessage);
       bot.sendMessage(chatId, 'Заявка успешно отправлена, ожидайте ответа оператора.');
       requestCounter++; // Увеличиваем номер заявки
     } else {
-      const adminChatId = '446415034'; // Замените на chat_id администратора
+      const adminChatId = '6498144305'; // Замените на chat_id администратора
       const userMessage = `Новая заявка номер ${requestCounter}:\n\nУслуга: ${userData[userId].service}\nТема: ${userData[userId].topic}\nЯзык работы: ${userData[userId].language}\nКоличество страниц: ${userData[userId].pages}\nИмя: ${userData[userId].name}\nНомер телефона: ${userData[userId].contact}`;
       bot.sendMessage(adminChatId, userMessage);
       bot.sendMessage(chatId, 'Заявка успешно отправлена, ожидайте ответа оператора.');
