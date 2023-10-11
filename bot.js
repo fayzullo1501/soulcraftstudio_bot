@@ -13,7 +13,7 @@ let requestCounter = 1; // Переменная для хранения номе
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
 
-  bot.sendMessage(chatId, 'Добро пожаловать в бота! Выберите услугу:', {
+  bot.sendMessage(chatId, 'Добро пожаловать! Выберите услугу:', {
     reply_markup: {
       keyboard: serviceKeyboard,
       resize_keyboard: true,
@@ -44,7 +44,7 @@ bot.on('text', (msg) => {
       userData[userId].service = messageText;
       bot.sendMessage(chatId, 'Введите тему работы:');
     } else {
-      bot.sendMessage(chatId, 'Пожалуйста, выберите услугу, используя кнопки-иконки.');
+      bot.sendMessage(chatId, '');
     }
   } else if (!userData[userId].topic) {
     userData[userId].topic = messageText;
