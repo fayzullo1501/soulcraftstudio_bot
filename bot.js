@@ -3,8 +3,8 @@ const token = '6647221838:AAFxmmP7u5K2MsjlfHWoRsRjNe_5gUmLgX0'; // Замени�
 const bot = new TelegramBot(token, { polling: true });
 
 const serviceKeyboard = [
-  [{ text: '📊 Презентация (Слайд)' }, { text: '📝 Объективка' }],
-  [{ text: '📄 Резюме' }, { text: '📇 Визитка' }],
+  [{ text: '📊 Prezentatsiya ( Slayd )' }, { text: '📝 Obyektivka' }],
+  [{ text: '📄 Resyume' }, { text: '📇 Vizitka' }],
 ];
 
 const userData = {};
@@ -13,7 +13,7 @@ let requestCounter = 1; // Переменная для хранения номе
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
 
-  bot.sendMessage(chatId, 'Добро пожаловать! Выберите услугу:', {
+  bot.sendMessage(chatId, "Xush kelibsiz! Yo'nalishni tanlang:", {
     reply_markup: {
       keyboard: serviceKeyboard,
       resize_keyboard: true,
@@ -42,41 +42,41 @@ bot.on('text', (msg) => {
   if (!userData[userId].service) {
     if (serviceKeyboard.some((row) => row.some((item) => item.text === messageText))) {
       userData[userId].service = messageText;
-      bot.sendMessage(chatId, 'Введите тему работы:');
+      bot.sendMessage(chatId, 'Taqdimot mavzusini kiriting:');
     } else {
       bot.sendMessage(chatId, '');
     }
   } else if (!userData[userId].topic) {
     userData[userId].topic = messageText;
-    bot.sendMessage(chatId, 'Введите язык работы:');
+    bot.sendMessage(chatId, 'Taqdimot tilini kiriting:');
   } else if (!userData[userId].language) {
     userData[userId].language = messageText;
-    bot.sendMessage(chatId, 'Введите количество страниц работы:');
+    bot.sendMessage(chatId, 'Taqdimotning necha varoqligini kiriting');
   } else if (!userData[userId].pages) {
     if (!isNaN(messageText)) {
       userData[userId].pages = parseInt(messageText);
-      bot.sendMessage(chatId, 'Введите ваше имя:');
+      bot.sendMessage(chatId, 'Ism Familyangizni kiriting:');
     } else {
-      bot.sendMessage(chatId, 'Введите корректное количество страниц:');
+      bot.sendMessage(chatId, 'Taqdimotning yaroqli necha varoqligini kiriting:');
     }
   } else if (!userData[userId].name) {
     userData[userId].name = messageText;
-    bot.sendMessage(chatId, 'Введите ваш номер телефона:');
+    bot.sendMessage(chatId, 'Telefon raqamingizni kiriting:');
   } else if (!userData[userId].contact) {
     userData[userId].contact = messageText;
 
     if (msg.from.username) {
       userData[userId].address = `@${msg.from.username}`;
       const adminChatId = '6498144305'; // Замените на chat_id администратора
-      const userMessage = `Новая заявка номер ${requestCounter}:\n\nУслуга: ${userData[userId].service}\nТема: ${userData[userId].topic}\nЯзык работы: ${userData[userId].language}\nКоличество страниц: ${userData[userId].pages}\nИмя: ${userData[userId].name}\nНомер телефона: ${userData[userId].contact}\nАдрес клиента (ник Telegram): ${userData[userId].address}`;
+      const userMessage = `Buyurtma № ${requestCounter}:\n\nServis: ${userData[userId].service}\nMavzu: ${userData[userId].topic}\nTil: ${userData[userId].language}\nVaroqlar soni: ${userData[userId].pages}\nFIO: ${userData[userId].name}\nTelefon raqami: ${userData[userId].contact}\nTelegram nik (adres): ${userData[userId].address}`;
       bot.sendMessage(adminChatId, userMessage);
-      bot.sendMessage(chatId, 'Заявка успешно отправлена, ожидайте ответа оператора.');
+      bot.sendMessage(chatId, 'Buyurtmangiz muvoffaqiyatli yuborildi. Operator javobini kuting!');
       requestCounter++; // Увеличиваем номер заявки
     } else {
       const adminChatId = '6498144305'; // Замените на chat_id администратора
-      const userMessage = `Новая заявка номер ${requestCounter}:\n\nУслуга: ${userData[userId].service}\nТема: ${userData[userId].topic}\nЯзык работы: ${userData[userId].language}\nКоличество страниц: ${userData[userId].pages}\nИмя: ${userData[userId].name}\nНомер телефона: ${userData[userId].contact}`;
+      const userMessage = `Buyurtma № ${requestCounter}:\n\nServis: ${userData[userId].service}\nMavzu: ${userData[userId].topic}\nTil: ${userData[userId].language}\nVaroqlar soni: ${userData[userId].pages}\nFIO: ${userData[userId].name}\nTelefon raqami: ${userData[userId].contact}`;
       bot.sendMessage(adminChatId, userMessage);
-      bot.sendMessage(chatId, 'Заявка успешно отправлена, ожидайте ответа оператора.');
+      bot.sendMessage(chatId, 'Buyurtmangiz muvoffaqiyatli yuborildi. Operator javobini kuting!');
       requestCounter++; // Увеличиваем номер заявки
     }
 
